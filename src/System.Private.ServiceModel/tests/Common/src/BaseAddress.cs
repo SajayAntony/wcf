@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-
 public static class BaseAddress
 {
     // base address never used for end-to-end communication
@@ -50,12 +48,6 @@ public static class BaseAddress
     // Base address for HTTPS endpoints with Windows Authentication
     public const string HttpsWindowsBaseAddress = "https://localhost:44285/WindowsCommunicationFoundation";
 #endif
-
-    // Base address for Net.TCP endpoints
-    public const string TcpBaseAddress = "net.tcp://localhost:809/WindowsCommunicationFoundation";
-    public const string TcpDuplexAddress = "net.tcp://localhost:810/WindowsCommunicationFoundation";
-    public const string TcpDuplexCallbackAddress = "net.tcp://localhost:811/WindowsCommunicationFoundation";
-    public const string TcpDuplexTaskReturnAddress = "net.tcp://localhost:812/WindowsCommunicationFoundation";
 }
 
 

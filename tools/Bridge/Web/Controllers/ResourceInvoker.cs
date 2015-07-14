@@ -1,0 +1,55 @@
+﻿using System;
+using System.Diagnostics;
+using WcfTestBridgeCommon;
+using Web.Models;
+using Web.Models.Data;
+
+namespace Web.Controllers
+{
+    public class ResourceInvoker
+    {
+        public static object DynamicInvokePut(resource resource)
+        {
+            if (String.IsNullOrEmpty(resource.name))
+            {
+                throw new ArgumentNullException("resource.name");
+            }
+
+            AppDomain appDomain;
+            if (!TypeCache.AppDomains.TryGetValue(ConfigController.CurrentAppDomain, out appDomain))
+            {
+                throw new ArgumentException("Resource not found");
+            }
+
+            Type loaderType = typeof(AssemblyLoader);
+            var loader =
+                (AssemblyLoader)appDomain.CreateInstanceFromAndUnwrap(
+                    loaderType.Assembly.Location,
+                    loaderType.FullName);
+
+            return loader.IResourceCall(resource.name, "Put");
+        }
+
+        public static object DynamicInvokeGet(string name)
+        {
+            if (String.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            AppDomain appDomain;
+            if (!TypeCache.AppDomains.TryGetValue(ConfigController.CurrentAppDomain, out appDomain))
+            {
+                throw new ArgumentException("Resource not found");
+            }
+
+            Type loaderType = typeof(AssemblyLoader);
+            var loader =
+                (AssemblyLoader)appDomain.CreateInstanceFromAndUnwrap(
+                    loaderType.Assembly.Location,
+                    loaderType.FullName);
+
+            return loader.IResourceCall(name, "Get");
+        }
+    }
+}
